@@ -3,15 +3,10 @@
 
 # ## Importing libraries
 
-# In[54]:
-
 
 import pandas as pd
 import numpy as np
 import datetime
-
-
-# In[55]:
 
 
 CH = pd.read_csv("D://Escritorio//Udacity Projects//Project II//DATA//chicago.csv")
@@ -19,15 +14,10 @@ NY = pd.read_csv("D://Escritorio//Udacity Projects//Project II//DATA//new_york_c
 WS = pd.read_csv("D://Escritorio//Udacity Projects//Project II//DATA//washington.csv")
 
 
-# In[56]:
-
-
 NY
 
 
 # ### Functions 
-
-# In[78]:
 
 
 def Table_Trans(df):
@@ -96,30 +86,16 @@ def get_year(df,choice):
         return "Not a valid input"
     
   
-
-        
+       
     
 
-
-
 # ## Transforming dataframes
-
-# In[58]:
 
 
 CH = Table_Trans(CH)
 NY = Table_Trans(NY)
 WS = Table_Trans(WS)
 
-
-# ## Checking variables types
-
-# In[1]:
-
-
-CH.dtypes
-NY.dtypes
-WS.dtypes
 
 
 # ## Answers 
@@ -145,7 +121,7 @@ print("Most common hour for travel in Chicago is {}, for New York is {} and in W
 
 # ## 2.- Popular stations and trip
 
-# In[46]:
+
 
 
 
@@ -163,9 +139,6 @@ print ("Most common trip in Chicago is: {}, in New York is: {} and finally in Wa
 
 # ## 3.- Trip duration
 
-# In[81]:
-
-
 #total travel time
 print ("The total travel time for Chicago is: {}, in New York is: {} and finally in Washigton is {}".format(get_travel(CH,"total"),get_travel(NY,"total"),get_travel(WS,"total")) )
 
@@ -174,8 +147,6 @@ print ("The total travel time for Chicago is: {} minutes, in New York is: {} min
 
 
 # ## 4.-User Info
-
-# In[81]:
 
 
 #counts of each user type
@@ -196,9 +167,6 @@ print("In Chicago the earliest year of birth is: {}, the more recent is: {} and 
 
 
 # ## 5.- Program Prototype
-
-# In[90]:
-
 
 cond = True
 while cond == True:
@@ -260,10 +228,4 @@ while cond == True:
         print ("Not a valid input")
         
         
-
-
-# In[ ]:
-
-
-
 
