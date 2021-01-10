@@ -3,21 +3,25 @@
 
 # ## Importing libraries
 
+# In[17]:
+
 
 import pandas as pd
 import numpy as np
 import datetime
 
 
-CH = pd.read_csv("D://Escritorio//Udacity Projects//Project II//DATA//chicago.csv")
-NY = pd.read_csv("D://Escritorio//Udacity Projects//Project II//DATA//new_york_city.csv")
-WS = pd.read_csv("D://Escritorio//Udacity Projects//Project II//DATA//washington.csv")
+# In[18]:
 
 
-NY
+CH = pd.read_csv("C://Users//felip//Desktop//Udacity Projects//chicago.csv")
+NY = pd.read_csv("C://Users//felip\Desktop//Udacity Projects//new_york_city.csv")
+WS = pd.read_csv("C://Users//felip\Desktop//Udacity Projects//washington.csv")
 
 
 # ### Functions 
+
+# In[19]:
 
 
 def Table_Trans(df):
@@ -70,7 +74,7 @@ def get_cust(df,choice):
         elif choice == "gender":
             return df.groupby(['Gender']).size().reset_index(name='Counts')
     except:
-        return "Not a valid input"
+        return "Oops, sorry! We still does not have info for that"
     
     
 
@@ -83,149 +87,242 @@ def get_year(df,choice):
         elif choice == "mode":
             return (int(df['Birth_Year'].mode()[0]))
     except:
-        return "Not a valid input"
+        return "Oops, sorry! We still does not have info for that"
     
-  
-       
+def answering_system(QQ,city,name):
+    if QQ[:4] == "time":
+        QQ2 = input("Do you want to know about common months, day or hour for travel?").lower()                
+        if QQ2[0] == "m": 
+            print ("Most common month for travel in {} is {}".format(name,get_month(city)))
+            ans = input("Do you want another operation? Y/N").lower()
+            if ans[0] == "y":
+                cond = True
+                return cond
+            elif ans[0] == "n":
+                print ("Thanks you for using our answering system")
+                cond = False
+                return cond
+                        
+                        
+        elif QQ2[0] == "d":
+            print("Most common day for travel in {} is {}".format(name,get_day(city)))
+            ans = input("Do you want another operation? Y/N").lower()
+            if ans[0] == "y":
+                cond = True
+                return cond
+            elif ans[0] == "n":
+                print ("Thanks you for using our answering system")
+                cond = False
+                return cond
+                        
+                        
+        elif QQ2[0] == "h":
+            print("Most common hour for travel in {} is at {} hrs.".format(name,get_time(city)))
+            ans = input("Do you want another operation? Y/N").lower()
+            
+            if ans[0] == "y":
+                cond = True
+                return cond
+            elif ans[0] == "n":
+                return ("Thanks you for using our answering system")
+                cond = False
+                return cond
+            else:
+                print("Invalid input, please start again")
+                cond = True
+                return cond
+                    
+                    
+    elif QQ[:4] == "stat":
+        QQ2 = input("Do you want to know about common start stations,common end stations or most common route?").lower()
+        QQ2 = QQ2.split()
+        if "start" in QQ2[0]: 
+            print("Most common month start station in {} is {}".format(name,get_station(city,"start")))
+            ans = input("Do you want another operation? Y/N").lower()
+            if ans[0] == "y":
+                cond = True
+                return cond
+            elif ans[0] == "n":
+                print ("Thanks you for using our answering system")
+                cond = False
+                return cond
+            
+            
+        elif "end" in QQ2:
+            print("Most common end station in {} is {}".format(name,get_station(city,"end")))
+            
+            ans = input("Do you want another operation? Y/N").lower()
+            if ans[0] == "y":
+                cond = True
+                return cond
+            elif ans[0] == "n":
+                print ("Thanks you for using our answering system")
+                cond = False
+                return cond
+            
+            
+        elif "route" in QQ2:
+            print("Most common route for travel in {} is {}".format(name,get_station(city,"trip")))
+            ans = input("Do you want another operation? Y/N").lower()
+            if ans[0] == "y":
+                cond = True
+                return cond
+            elif ans[0] == "n":
+                print ("Thanks you for using our answering system")
+                cond = False
+                return cond
+            
+        else:
+            print("Invalid input, please start again")
+            cond = True
+            return cond
+        
+    elif QQ[:3] == "tri":
+        QQ2 = input("Do you want to know total travel time or average travel time?").lower()
+        QQ2 = QQ2.split()
+        if "total" in QQ2: 
+            print("The total travel time in {}is {}".format(name,get_travel(city,"total")))
+            
+            ans = input("Do you want another operation? Y/N").lower()
+            if ans[0] == "y":
+                cond = True
+                return cond
+            elif ans[0] == "n":
+                print ("Thanks you for using our answering system")
+                cond = False
+                return cond
+        elif "average" in QQ2:
+            print("The average travel time in {} is {} minutes".format(name,get_travel(city,"avg")))
+          
+            ans = input("Do you want another operation? Y/N").lower()
+            if ans[0] == "y":
+                cond = True
+                return cond
+            elif ans[0] == "n":
+                print ("Thanks you for using our answering system")
+                cond = False
+                return cond
+        else:
+            print("Invalid input, please start again")
+            cond = True
+            return cond
+   
+
+    elif QQ[:3] == "use":
+        QQ2 = input("Do you want to know users types,users genders or users birthdays?").lower()
+        QQ2 = QQ2.split()
+        if "types" or "type" in QQ2[0]: 
+            print ("The amount of customers,and suscribers in {} are: {} and {}".format(name,str(get_cust(city,"user").iloc[0,1]),str(get_cust(city,"user").iloc[1,1])))
+        
+            ans = input("Do you want another operation? Y/N").lower()
+            if ans[0] == "y":
+                cond = True
+                return cond
+            elif ans[0] == "n":
+                print ("Thanks you for using our answering system")
+                cond = False
+                return cond
+        elif "genders" or "gender" in QQ2:
+            print ("The amount of users per gender is in {} is: {} female and {} male".format(name,str(get_cust(city,"gender").iloc[0,1]),str(get_cust(city,"gender").iloc[1,1])))
+            
+            ans = input("Do you want another operation? Y/N").lower()
+            if ans[0] == "y":
+                cond = True
+                return cond
+            elif ans[0] == "n":
+                print ("Thanks you for using our answering system")
+                cond = False
+                return cond
+        elif "birthday" or "birthdays" or "birth" in QQ2:
+            QQ3 = input ("Do you you want to know the earliest year of birth, the more recent, ot the most common birthday year?")   
+            QQ3 = QQ3.split()
+            if "earliest" or "early" in QQ3:
+                print("In {} the earliest year of birth is:".format(name,get_year(city,"early")))                                  
+                ans = input("Do you want another operation? Y/N").lower()
+                if ans[0] == "y":
+                    cond = True
+                    return cond
+                elif ans[0] == "n":
+                    return ("Thanks you for using our answering system")
+                    cond = False
+                    return cond
+                else:
+                    print("Invalid input, please start again")
+                    cond = True
+                    return cond
+            elif "recent" in QQ3:
+                print("In {} most recent year of birth is: {}".format(name,get_year(city,"recent")))
+                                                                           
+                ans = input("Do you want another operation? Y/N").lower()
+                if ans == "y":
+                    cond = True
+                    return cond
+                elif ans == "n":
+                    print ("Thanks you for using our answering system")
+                    cond = False
+                    return cond
+                else:
+                    print("Invalid input, please start again")
+                    cond = True
+                    return cond
+                                                                          
+            elif "common" in QQ3:
+                print("In {} most common year of birth is: {}".format(name,get_year(city,"mode")))                                  
+                
+                ans = input("Do you want another operation? Y/N").lower()
+                if ans[0] == "y":
+                    cond = True
+                    return cond
+                elif ans[0] == "n":
+                    print ("Thanks you for using our answering system")
+                    cond = False
+                    return cond
+                else:
+                    print ("Invalid input, please start again")
+                    cond = True
+                    return cond
     
-
-# ## Transforming dataframes
-
 
 CH = Table_Trans(CH)
 NY = Table_Trans(NY)
 WS = Table_Trans(WS)
+    
+  
+
+        
+    
 
 
 
 # ## Answers 
 
-# ## 1.- Popular times of travel 
+# In[78]:
 
-# In[45]:
-
-
-#1 Popular times of travel (i.e., occurs most often in the start time)
-
-#most common month
-print("Most common month for travel in Chicago is {}, for New York is {} and in Washigton is {}".format(get_month(CH),get_month(NY),get_month(WS)) )
-
-
-#most common day
-print("Most common day for travel in Chicago is {}, for New York is {} and in Washigton is {}".format(get_day(CH),get_day(NY),get_day(WS)) )
-
-
-#most common hour of day
-print("Most common hour for travel in Chicago is {}, for New York is {} and in Washigton is {}".format(get_time(CH),get_time(NY),get_time(WS)) )
-
-
-# ## 2.- Popular stations and trip
-
-
-
-
-
-#most common start station
-print ("Most common station in Chicago is: {}, in New York is: {} and finally in Washigton is {}".format(get_station(CH,"start"),get_station(NY,"start"),get_station(WS,"start")) )
-
-
-#most common end station
-print ("Most common station in Chicago is: {}, in New York is: {} and finally in Washigton is {}".format(get_station(CH,"end"),get_station(NY,"end"),get_station(WS,"end")) )
-
-#most common trip from start to end (i.e., most frequent combination of start station and end station)
-
-print ("Most common trip in Chicago is: {}, in New York is: {} and finally in Washigton is {}".format(get_station(CH,"trip"),get_station(NY,"trip"),get_station(WS,"trip")) )
-
-
-# ## 3.- Trip duration
-
-#total travel time
-print ("The total travel time for Chicago is: {}, in New York is: {} and finally in Washigton is {}".format(get_travel(CH,"total"),get_travel(NY,"total"),get_travel(WS,"total")) )
-
-#average travel time
-print ("The total travel time for Chicago is: {} minutes, in New York is: {} minutes and finally in Washigton is {} minutes".format(get_travel(CH,"avg"),get_travel(NY,"avg"),get_travel(WS,"avg")) )
-
-
-# ## 4.-User Info
-
-
-#counts of each user type
-
-print ("The amount of customers,dependent and suscribers in Chicago are: {}, {} and {}".format(str(get_cust(CH,"user").iloc[0,1]),str(get_cust(CH,"user").iloc[1,1]),str(get_cust(CH,"user").iloc[2,1])))
-print ("The amount of customers,and suscribers in New York are: {} and {}".format(str(get_cust(NY,"user").iloc[0,1]),str(get_cust(NY,"user").iloc[1,1])))
-print ("The amount of customers,and suscribers in Washington are: {} and {}".format(str(get_cust(WS,"user").iloc[0,1]),str(get_cust(WS,"user").iloc[1,1])))
-
-#counts of each gender (only available for NYC and Chicago)
-
-print ("The amount of users per type is in Chicago is: {} female and {} male".format(str(get_cust(CH,"gender").iloc[0,1]),str(get_cust(CH,"gender").iloc[1,1])))
-print ("The amount of users per type is in New York is: {} female and {} male".format(str(get_cust(NY,"gender").iloc[0,1]),str(get_cust(NY,"gender").iloc[1,1])))
-
-#earliest, most recent, most common year of birth (only available for NYC and Chicago)
-
-print("In New York the earliest year of birth is: {}, the more recent is: {} and the most common year is: {}".format(get_year(NY,"early"), get_year(NY,"recent"),get_year(NY,"mode")))
-print("In Chicago the earliest year of birth is: {}, the more recent is: {} and the most common year is: {}".format(get_year(CH,"early"), get_year(CH,"recent"),get_year(CH,"mode")))
-
-
-# ## 5.- Program Prototype
 
 cond = True
 while cond == True:
     start = input("What city do you want to review? New York (NY), Chicago (CH), Washington (WS)").lower()
     if start[0] == "n":
+        city = NY
+        name = "New York"
         QQ = input("Do you like to know about Times,stations,trips or users").lower()
-        if QQ == "times":
-            print("Most common month for travel in New York is {}, and the day is {},finally the hour is {} hrs".format(get_month(NY),get_day(NY),get_time(NY)))
-            cond = False
-        
-        elif QQ == "stations":
-            print ("Most common start station in New York is: {}, the most common end station is: {} and finally most common trip is {}".format(get_station(NY,"start"),get_station(NY,"end"),get_station(WS,"trip")) )
-            cond = False
-        elif QQ == "trips":
-            print ("the total travel time for New York is: {}, and the average travel time is: {} minutes".format(get_travel(NY,"total"),get_travel(NY,"avg")) )
-            cond = False
-        elif QQ == "users":
-            print ("The amount of customers,and suscribers in New York are: {} and {}".format(str(get_cust(NY,"user").iloc[0,1]),str(get_cust(NY,"user").iloc[1,1])))
-            print ("The amount of users per type is in New York is: {} female and {} male".format(str(get_cust(NY,"gender").iloc[0,1]),str(get_cust(NY,"gender").iloc[1,1])))
-            print("In New York the earliest year of birth is: {}, the more recent is: {} and the most common year is: {}".format(get_year(NY,"early"), get_year(NY,"recent"),get_year(NY,"mode")))
-            cond = False
-        
+        cond = answering_system(QQ,city,name)
     elif start[0] == "c":
+        city = CH
+        name = "Chicago"
         QQ = input("Do you like to know about Times,stations,trips or users").lower()
-        if QQ == "times":
-            print("Most common month for travel in Chicago is {}, and the day is {},finally the hour is {} hrs".format(get_month(CH),get_day(CH),get_time(CH)))
-            cond = False
-        
-        elif QQ == "stations":
-            print ("Most common start station in Chicago is: {}, the most common end station is: {} and finally most common trip is {}".format(get_station(CH,"start"),get_station(CH,"end"),get_station(CH,"trip")) )
-            cond = False
-        elif QQ == "trips":
-            print ("the total travel time for Chicago is: {}, and the average travel time is: {} minutes".format(get_travel(CH,"total"),get_travel(CH,"avg")) )
-            cond = False
-        elif QQ == "users":
-            print ("The amount of customers,and suscribers in Chicago are: {} and {}".format(str(get_cust(CH,"user").iloc[0,1]),str(get_cust(CH,"user").iloc[1,1])))
-            print ("The amount of users per type is in Chicago is: {} female and {} male".format(str(get_cust(CH,"gender").iloc[0,1]),str(get_cust(CH,"gender").iloc[1,1])))
-            print("In Chicago the earliest year of birth is: {}, the more recent is: {} and the most common year is: {}".format(get_year(CH,"early"), get_year(NY,"recent"),get_year(CH,"mode")))
-            cond = False
-        
-    elif start[0] == "w":
+        cond  = answering_system(QQ,city,name)
+    elif start [0] == "w":
+        city = WS
+        name = "Washington"
         QQ = input("Do you like to know about Times,stations,trips or users").lower()
-        if QQ == "times":
-            print("Most common month for travel in Washington is {}, and the day is {},finally the hour is {} hrs.".format(get_month(WS),get_day(WS),get_time(WS)))
-            cond = False
-        
-        elif QQ == "stations":
-            print ("Most common start station in Washington is: {}, the most common end station is: {} and finally most common trip is {}".format(get_station(WS,"start"),get_station(WS,"end"),get_station(WS,"trip")) )
-            cond = False
-        elif QQ == "trips":
-            print ("the total travel time for Washington is: {}, and the average travel time is: {} minutes".format(get_travel(WS,"total"),get_travel(WS,"avg")) )
-            cond = False
-        elif QQ == "users":
-            print ("The amount of customers,and suscribers in Washington are: {} and {}".format(str(get_cust(WS,"user").iloc[0,1]),str(get_cust(WS,"user").iloc[1,1])))
-
-            cond = False
-        
+        condt =answering_system(QQ,city,name)
     else:
-        print ("Not a valid input")
-        
-        
+        print ("Incorrect city")
+
+
+# In[ ]:
+
+
+
 
