@@ -3,7 +3,7 @@
 
 # ## Importing libraries
 
-# In[17]:
+# In[20]:
 
 
 import pandas as pd
@@ -11,7 +11,7 @@ import numpy as np
 import datetime
 
 
-# In[18]:
+# In[21]:
 
 
 CH = pd.read_csv("C://Users//felip//Desktop//Udacity Projects//chicago.csv")
@@ -21,7 +21,7 @@ WS = pd.read_csv("C://Users//felip\Desktop//Udacity Projects//washington.csv")
 
 # ### Functions 
 
-# In[19]:
+# In[22]:
 
 
 def Table_Trans(df):
@@ -281,6 +281,15 @@ def answering_system(QQ,city,name):
                     print ("Invalid input, please start again")
                     cond = True
                     return cond
+    else:
+        print("This is an incorrect option, please start again and when needed please type: \n" +
+              " 'times' for information related to times \n" +
+               " 'stations' for information related to stations \n"+ 
+              " 'trips' for information related to trips \n" +
+              "'user'for information related to users")
+        cond = True
+        return cond
+        
     
 
 CH = Table_Trans(CH)
@@ -296,7 +305,7 @@ WS = Table_Trans(WS)
 
 # ## Answers 
 
-# In[78]:
+# In[23]:
 
 
 cond = True
@@ -305,17 +314,17 @@ while cond == True:
     if start[0] == "n":
         city = NY
         name = "New York"
-        QQ = input("Do you like to know about Times,stations,trips or users").lower()
+        QQ = input("Please select what information you would like to know about: Times,stations,trips or users").lower()
         cond = answering_system(QQ,city,name)
     elif start[0] == "c":
         city = CH
         name = "Chicago"
-        QQ = input("Do you like to know about Times,stations,trips or users").lower()
+        QQ = input("Please select what information you would like to know about: Times,stations,trips or users").lower()
         cond  = answering_system(QQ,city,name)
     elif start [0] == "w":
         city = WS
         name = "Washington"
-        QQ = input("Do you like to know about Times,stations,trips or users").lower()
+        QQ = input("Please select what information you would like to know about: Times,stations,trips or users").lower()
         condt =answering_system(QQ,city,name)
     else:
         print ("Incorrect city")
